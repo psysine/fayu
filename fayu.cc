@@ -157,7 +157,7 @@ void start() {
     numcand = min(batchsizemin, uint(db.size()));
   else if(numcand > batchsizemax)
     numcand = batchsizemax;
-  if(!numcand) {
+  if(!numcand || db.empty()) {
     cout << "database is empty\n";
     return;
     }
@@ -173,7 +173,10 @@ void start() {
     swap(cand[i], cand[j]);
     }
   ofstream out(trainfilename.c_str());
-  assert(out.good() && !db.empty());
+  if(!out.good()) {
+    cout << "could not open file:\n" << trainfilename <<'\n';
+    return;
+    }
   for(unsigned i = 0; i < emptylines; i++)
     out << endl;
   for(map<char, string>::iterator it0 = dbs.begin(); it0 != dbs.end(); it0++) {
@@ -191,7 +194,10 @@ void start() {
 
 bool finish(string filename) {
   ifstream in(filename.c_str());
-  assert(in.good());
+  if(!in.good()) {
+    cout << "could not open file:\n" << filename <<'\n';
+    return 0;
+    }
   string s;
   vector<string> tochange;
   vector<pair<string, int> > input;
@@ -347,7 +353,10 @@ void undo() {
 
 void loadsettings() {
   ifstream settingsfile("settings");
-  assert(settingsfile.good());
+  if(!settingsfile.good()) {
+    cout << "could not open file \"settings\"\n";
+    return;
+    }
   getline(settingsfile, trainfilename);
   getline(settingsfile, auxfilename);
   settingsfile >> emptylines >> target;
@@ -355,7 +364,10 @@ void loadsettings() {
 
 void savesettings() {
   ofstream settingsfile("settings");
-  assert(settingsfile.good());
+  if(!settingsfile.good()) {
+    cout << "could not open file \"settings\"\n";
+    return;
+    }
   settingsfile << trainfilename << endl
     << auxfilename << endl
     << emptylines << endl
@@ -395,7 +407,7 @@ void loadcoefs() {
 
 void calibrate() {
   printraw();
-  system("./cal.R > coeefs");
+  system("./cal.R > coefs");
   loadcoefs();
   }
 
@@ -403,7 +415,11 @@ void calibrate() {
 //string|int:1/0|int:1/0|...|0\n
 
 int main(int argc, char **argv) {
-  assert(argc >= 2);
+  if(argc < 2) {
+    printf("Usage: %s <command>\n"
+"available commands: stat[istics], c[ontinue], aux[iliary], cal[ibrate], undo\n", argv[0]);
+    return 1;
+    }
   string command = argv[1];
   loadsettings();
   loadcoefs();
@@ -411,10 +427,16 @@ int main(int argc, char **argv) {
   char ch;
   string st;
   while(dbsfile >> ch >> st) {
-    assert(!st.empty());
+    if(st.empty()) {
+      cout << "syntax error in file \"databases\", aborting\n";
+      return 1;
+      }
     dbs[ch] = st;
     ifstream dbfile(st.c_str());
-    assert(dbfile.good());
+    if(!dbfile.good()) {
+      cout << "could not open file:\n" << st <<'\n';
+      return 1;
+      }
     string s;
     while(getline(dbfile, s, '|')) {
       vector<stamp> vi;
@@ -461,7 +483,10 @@ int main(int argc, char **argv) {
 
   for(map<char, string>::iterator it0 = dbs.begin(); it0 != dbs.end(); it0++) {
     ofstream dbout((it0->second+".new").c_str(), ios_base::trunc);
-    assert(dbout.good());
+    if(!dbout.good()) {
+      cout << "could not open file:\n" << it0->second+".new" <<'\n';
+      return 1;
+      }
     for(map<string, data>::iterator it = db.begin(); it != db.end(); it++)
       if(it0->first == it->second.lang) {
         dbout << it->first << '|';
