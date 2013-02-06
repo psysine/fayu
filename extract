@@ -1,0 +1,6 @@
+#!/bin/sh
+TEMP=$(mktemp)
+grep -h "$1" $(cat databases | sed s/..//) | sed 's/|.*//' > $TEMP
+wc -l < $TEMP
+cat $TEMP >> ~/Desktop/words/wordsr
+
