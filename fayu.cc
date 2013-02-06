@@ -113,6 +113,16 @@ double rate(const vector<stamp> v) {
   return ilogit(sum);
   }
 
+istream &getline2(istream &is, string &s) {
+  getline(is, s);
+  while(s[s.size()-1] == '\\') {
+    string ss;
+    getline(is, ss);
+    s += '\n' + ss;
+    }
+  return is;
+  }
+
 void start() {
   if(target_dunno <= 0) {
     ofstream out(trainfilename.c_str());
@@ -187,7 +197,7 @@ bool finish(string filename) {
   vector<pair<string, int> > input;
   bool hasoldornew = 0, isnew = 1;
   char ch;
-  while(getline(in, s))
+  while(getline2(in, s))
     if(!s.empty()) {
       if(s[s.size()-1] == ':')
         continue;
@@ -201,11 +211,6 @@ bool finish(string filename) {
         if(s == "old")
           isnew = 0;
         continue;
-        }
-      while(s[s.size()-1] == '\\') { //handle multi-line entries
-        string ss;
-        getline(in, ss);
-        s += '\n' + ss;
         }
       bool dunno = false;
       size_t pos = s.find_first_of('*');
@@ -262,7 +267,7 @@ bool finish(string filename) {
     cout << "press enter when you're done changing\n";
     cin.ignore(1024, '\n');
     ifstream in(filename.c_str());
-    for(unsigned i = 0; getline(in, s) && i < tochange.size(); i++) {
+    for(unsigned i = 0; getline2(in, s) && i < tochange.size(); i++) {
       if(s != tochange[i]) {
         if(!s.empty())
           db[s] = db[tochange[i]], cout << "copied to " << s.substr(0, 5) << "...\n";
