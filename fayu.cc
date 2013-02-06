@@ -122,7 +122,7 @@ void start() {
   cand.reserve(db.size());
   iter(it, db) {
     double rating = rate(it->S.stamps);
-    int lastupdate = it->S.stamps.back().time;
+    int lastupdate = it->S.stamps.size() ? it->S.stamps.back().time : 0;
     double sortby;
     if(rating > target)
       sortby = rating;
@@ -147,6 +147,10 @@ void start() {
     numcand = min(batchsizemin, uint(db.size()));
   else if(numcand > batchsizemax)
     numcand = batchsizemax;
+  if(!numcand) {
+    cout << "database is empty\n";
+    return;
+    }
   cout << "count: " << numcand
     << ", worst: " << cand[0].F.S
     << ", best: " << cand[numcand-1].F.S
