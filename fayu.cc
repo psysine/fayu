@@ -202,6 +202,11 @@ bool finish(string filename) {
           isnew = 0;
         continue;
         }
+      while(s[s.size()-1] == '\\') { //handle multi-line entries
+        string ss;
+        getline(in, ss);
+        s += '\n' + ss;
+        }
       bool dunno = false;
       size_t pos = s.find_first_of('*');
       if(pos != s.npos) {
