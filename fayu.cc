@@ -195,7 +195,7 @@ bool finish(string filename) {
   string s;
   vector<string> tochange;
   vector<pair<string, int> > input;
-  bool hasoldornew = 0, isnew = 1;
+  bool hasoldornew = 0, isnew = 1, haspipe = 0;
   char ch;
   while(getline2(in, s))
     if(!s.empty()) {
@@ -204,7 +204,7 @@ bool finish(string filename) {
       if(s == "old" || (s.size() == 5 && s.substr(0, 4) == "new " && dbs.count(ch = s[4]))) {
         if(hasoldornew) {
           cout << "old or new can only be specified once!\n"
-            << "nothing doe.\n";
+            << "nothing done.\n";
           return 0;
           }
         hasoldornew = 1;
@@ -227,8 +227,15 @@ bool finish(string filename) {
           s.erase(pos, 1);
         tochange.push_back(s);
         }
+      pos = s.find_first_of('|');
+      if(pos != s.npos) haspipe = 1;
       input.push_back(make_pair(s, !dunno));
       }
+  if(haspipe) {
+    cout << "entries cannot contain \'|\'.\n"
+      << "nothing done.\n";
+    return 0;
+    }
   if(!input.empty() && !hasoldornew) {
     cout << "you need to let one line contain only \"old\" or \"new <lang>\"!\n"
       << "nothing done.\n";
