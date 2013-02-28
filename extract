@@ -1,6 +1,8 @@
 #!/bin/sh
 TEMP=$(mktemp)
+FILE=$(awk 'NR==2' settings)
 grep -h "$1" $(cat databases | sed s/..//) | sed 's/|.*//' > $TEMP
 wc -l < $TEMP
-cat $TEMP >> ~/Desktop/words/wordsr
+cat $TEMP >> $FILE
+rm $TEMP
 
