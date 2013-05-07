@@ -1,0 +1,3 @@
+#!/bin/sh
+rm databases
+ln -s databases.$1 databases

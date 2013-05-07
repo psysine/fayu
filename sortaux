@@ -1,0 +1,3 @@
+#!/bin/sh
+FILE=$(awk 'NR==2' settings)
+sort $FILE -o $FILE
