@@ -1,12 +1,16 @@
-knew, b=0 
+knew,maxkt=0 
+2 
 (Intercept)   lsl   
-2.289119   -0.09606553   
-knew, b>0 
-(Intercept)   lsl   I(la * lsl)   I(la^2 * lsl)   I(lb * lsl)   I(c * lsl)   la   I(la^2)   lb   c   
--6.708257   0.4458937   -0.1769282   0.006455431   0.02436156   -0.356303   1.704119   -0.05245049   -0.1687315   9.112121   
-!knew, b=0 
+4.831222   -0.2760361   
+knew,maxkt>0 
+30 
+(Intercept)   lsl   I(la*lsl)   la   I(la^2*lsl)   I(la^2)   I(lmaxkt*lsl)   lmaxkt   I(lmax2kt*lsl)   lmax2kt   I(d*lsl)   d   I(lsumkt*lsl)   lsumkt   I(lsumdt*lsl)   lsumdt   I(sumlkt*lsl)   sumlkt   I(sumldt*lsl)   sumldt   I(lsumldt*lsl)   lsumldt   I(c*lsl)   c   I((k2+k3+k4)*lsl)   I(k2+k3+k4)   I((k5+k6+k7)*lsl)   I(k5+k6+k7)   I(lnseen*lsl)   lnseen   
+-10.06575   0.7355104   -0.2667189   2.772097   0.01017128   -0.0983709   -0.1591532   1.700885   -0.002599206   0.09248811   -0.05652252   0.8615242   0.2403148   -2.461579   0.01200576   -0.1019967   -0.0002555594   0.003359401   0.0005151416   -0.004043462   -0.09816762   1.065067   -0.6716736   9.682885   -0.03005425   0.7251893   0.002143324   0.2328093   -0.07721915   0.3004257   
+!knew,maxkt=0 
+3 
 (Intercept)   lsl   c   
-0.9374673   -0.1521023   2.883502   
-!knew, b>0 
-(Intercept)   lsl   I(lb * lsl)   I(c * lsl)   lb   c   
--0.6467779   -0.09660322   0.006092872   -0.3402902   -0.02605141   8.002679   
+0.7355629   -0.1785645   3.354394   
+!knew,maxkt>0 
+26 
+(Intercept)   lsl   I(lmaxkt*lsl)   lmaxkt   I(lmax2kt*lsl)   lmax2kt   I(d*lsl)   d   I(lsumkt*lsl)   lsumkt   I(lsumdt*lsl)   lsumdt   I(sumlkt*lsl)   sumlkt   I(sumldt*lsl)   sumldt   I(lsumldt*lsl)   lsumldt   I(c*lsl)   c   I((k2+k3+k4)*lsl)   I(k2+k3+k4)   I((k5+k6+k7)*lsl)   I(k5+k6+k7)   I(lnseen*lsl)   lnseen   
+-2.030377   0.1296608   -0.002705934   -0.198691   -0.001966226   0.004616517   -0.1083395   0.8851253   0.02869512   0.1442735   -0.03634537   0.1704397   0.0003380453   -0.001817427   -0.0003760882   0.004881225   -0.1074685   1.340309   0.3712705   0.5754865   -0.06492424   0.6634716   -0.02459043   0.3440534   0.1617504   -2.240378   
